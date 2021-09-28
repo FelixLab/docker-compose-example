@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    volumes:
+      - ./wordpress_files:/var/www/html
+    ports:
+      - "80:80"
+    restart: always
+    environment: 
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: db_docker_wordpress
+      WORDPRESS_TABLE_PREFIX: prefixtabelle_ 
+      WORDPRESS_DB_USER: docker_wordpress
+      WORDPRESS_DB_PASSWORD: scelgo_una_password_complessa!1
+
+  db:
+    container_name: db
+    image: mysql:5.7
+    volumes:
+      - ./db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: scelgo_una_password_molto_complessa123!?
+      MYSQL_DATABASE: db_docker_wordpress
+      MYSQL_USER: docker_wordpress
+      MYSQL_PASSWORD: scelgo_una_password_complessa!1
